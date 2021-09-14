@@ -1,0 +1,22 @@
+- name: Setup OpenVPN
+  become: yes
+  hosts: all
+  tasks:
+
+    - name: Download openvpn-install.sh
+      get_url:
+        url: https://raw.githubusercontent.com/angristan/openvpn-install/master/openvpn-install.sh
+        dest: /opt/openvpn-install.sh
+        mode: 0700
+
+    - name: Run openvpn-install.sh
+      shell: /opt/openvpn-install.sh
+      environment:
+        AUTO_INSTALL: y
+        CLIENT: "{{ server_name }}"
+    
+    - name: Download ovpn config
+      fetch:
+        src: ~/{{ server_name }}.ovpn
+        dest: "{{ dl_dir }}/"
+        flat: yes
