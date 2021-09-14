@@ -10,7 +10,7 @@ variable "pvt_key" {
 }
 
 variable "download_dir" {
-    description = "Path to a directory on your coputer to which all VPN-client files will be downloaded."
+    description = "Path to a directory on your computer to which all VPN-client files will be downloaded."
     type        = string
     default     = "~/vpn/"
 }
