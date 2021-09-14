@@ -1,16 +1,3 @@
-terraform {
-    required_providers {
-        linode = {
-            source  = "linode/linode"
-            version = "1.16.0"
-        }
-    }
-}
-
-provider "linode" {
-    token = var.token
-}
-
 resource "linode_instance" "vpn-server" {
     label           = var.name
     image           = var.image
