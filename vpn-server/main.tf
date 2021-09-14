@@ -1,3 +1,16 @@
+terraform {
+    required_providers {
+        linode = {
+            source  = "linode/linode"
+            version = "1.16.0"
+        }
+    }
+}
+
+provider "linode" {
+    token = var.token
+}
+
 resource "linode_instance" "vpn-server" {
     label           = var.name
     image           = var.image
@@ -20,6 +33,10 @@ resource "linode_instance" "vpn-server" {
     }
 
     provisioner "local-exec" {
-        command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i '${self.ip_address},' --private-key ${var.pvt_key} -e 'server_name=${var.name} dl_dir=${var.download_dir}' ovpn-install.yml"
+        command = <<-EOT
+            exec "curl https://raw.githubusercontent.com/Dekamik/vpn-modules/main/vpn-server/ovpn-install.yml > ./ovpn-install.yml"
+            exec "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i '${self.ip_address},' --private-key ${var.pvt_key} -e 'server_name=${var.name} dl_dir=${var.download_dir}' ./ovpn-install.yml"
+            exec "rm ./ovpn-install.yml"
+        EOT
     }
 }
