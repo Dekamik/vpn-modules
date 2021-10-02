@@ -43,7 +43,7 @@ resource "linode_instance" "vpn-server" {
         command = <<-EOT
             mkdir ~/tmp
             mkdir ~/tmp/${var.name}
-            curl https://raw.githubusercontent.com/Dekamik/vpn-modules/main/vpn-server/ovpn-install.yml?token=ABAPBXL5TDFWYWYOMW5VYGDBLBPVM > ~/tmp/${var.name}/ovpn-install.yml
+            curl https://raw.githubusercontent.com/Dekamik/vpn-modules/main/vpn-server/ovpn-install.yml > ~/tmp/${var.name}/ovpn-install.yml
             ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i '${self.ip_address},' --private-key ${var.pvt_key} -e 'server_name=${var.name} dl_dir=${var.download_dir}' ~/tmp/${var.name}/ovpn-install.yml
             rm -rf ~/tmp/${var.name}
             find ~/tmp -maxdepth 0 -empty -exec rmdir ~/tmp \;
