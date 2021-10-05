@@ -5,13 +5,6 @@ terraform {
             version = "1.16.0"
         }
     }
-
-    backend "remote" {
-        organization = "Dekamik"
-        workspaces {
-            name = "vpn-modules"
-        }
-    }
 }
 
 provider "linode" {
