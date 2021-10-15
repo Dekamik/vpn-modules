@@ -15,6 +15,12 @@
         AUTO_INSTALL: y
         CLIENT: "{{ server_name }}"
     
+    - name: Disable OpenVPN logging
+      lineinfile:
+        path: /etc/openvpn/server.conf
+        regexp: '^verb [0-9]*$'
+        line: verb 0
+    
     - name: Download ovpn config
       fetch:
         src: ~/{{ server_name }}.ovpn
