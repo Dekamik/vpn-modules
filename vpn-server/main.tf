@@ -7,10 +7,6 @@ terraform {
     }
 }
 
-provider "linode" {
-    token = var.token
-}
-
 resource "linode_instance" "vpn-server" {
     label           = var.name
     image           = var.image
