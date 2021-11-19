@@ -14,20 +14,6 @@ resource "linode_instance" "vpn-server" {
     type            = var.type
     authorized_keys = values(var.public_keys)
 
-    provisioner "remote-exec" {
-        inline = [
-            "sudo apt update",
-            "sudo apt install python3 -y"
-        ]
-
-        connection {
-            host        = self.ip_address
-            type        = "ssh"
-            user        = "root"
-            private_key = file(var.pvt_key)
-        }
-    }
-
     provisioner "local-exec" {
         command = <<-EOT
             mkdir ~/tmp
